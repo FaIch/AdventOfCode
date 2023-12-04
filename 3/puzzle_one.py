@@ -27,7 +27,6 @@ def find_number(array, i):
     return int(number), push
 
 
-
 def find_sum(array):
     symbols = set('!@#$%^&*()-+?_=,<>/')
     total_sum = 0
@@ -56,7 +55,6 @@ def find_sum(array):
             j += 1
 
     print(total_sum)
-
 
 
 def main():
