@@ -41,7 +41,6 @@ def parse_array(array):
 
 
 def find_location_number(array):
-    print(array[0])
     for i in range(1, len(array)):
         for j in range(len(array[0])):
             current_value = int(array[0][j])
@@ -54,8 +53,8 @@ def find_location_number(array):
                     array[0][j] = destination + (current_value - source)
                     break
 
-    return array[0]
+    return min(array[0])
 
 if __name__ == '__main__':
-    result = parse_array(create_array('test.txt'))
+    result = parse_array(create_array('input.txt'))
     print(find_location_number(result))
