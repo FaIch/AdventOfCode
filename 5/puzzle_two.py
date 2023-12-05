@@ -1,5 +1,5 @@
 import copy
-
+from tqdm import tqdm
 
 class ValueMap:
     def __init__(self, destination, source, range_length):
@@ -20,19 +20,15 @@ def create_array(filename):
 
 
 def parse_array(array):
-    seeds = array[0][7:].split(' ')
+    seeds_info = array[0][7:].split(' ')
+    seed_ranges= []
 
-    '''
-    for i in range(int(seeds_unf[0]), int(int(seeds_unf[0] + seeds_unf[1])/50000000)):
-        seeds.append(i)
-    
-    while i < (len(seeds_unf) - 1):
-        for j in range(int(seeds_unf[i]), int(seeds_unf[i]) + int(seeds_unf[i+1])):
-            seeds.append(j)
-        i += 2
-    '''
+    for i in range(0, len(seeds_info), 2):
+        start = int(seeds_info[i])
+        length = int(seeds_info[i + 1])
+        seed_ranges.append((start, start + length))
 
-    complete_array = [seeds]
+    complete_array = [seed_ranges]
     temp_array = []
     for i in range(1, len(array)):
         if array[i][0].isnumeric():
@@ -52,21 +48,31 @@ def parse_array(array):
 
 
 def find_location_number(array):
-    print(array[0])
-    for i in range(1, len(array)):
-        for j in range(len(array[0])):
-            current_value = int(array[0][j])
-            for k in range(len(array[i])):
-                source = int(array[i][k].source)
-                destination = int(array[i][k].destination)
-                length = int(array[i][k].range_length)
+    min_location = float('inf')
 
-                if source <= current_value <= (source + length):
-                    array[0][j] = destination + (current_value - source)
-                    break
-    return array[0]
+    total_iterations = sum(end - start for start, end in array[0])
+    progress = tqdm(total=total_iterations, desc="Processing", unit="seed")
+
+    for start, end in array[0]:
+        for seed in range(start, end):
+            current_value = seed
+            for i in range(1, len(array)):
+                for value_map in array[i]:
+                    source = int(value_map.source)
+                    destination = int(value_map.destination)
+                    length = int(value_map.range_length)
+
+                    if source <= current_value <= source + length:
+                        current_value = destination + (current_value - source)
+                        break
+            min_location = min(min_location, current_value)
+            progress.update(1)
+
+    progress.close()
+    return min_location
+
 
 
 if __name__ == '__main__':
     result = parse_array(create_array('input.txt'))
-    print(min(find_location_number(result)))
+    print(find_location_number(result))
