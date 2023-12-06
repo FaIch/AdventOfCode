@@ -13,7 +13,7 @@ def create_array(filename):
 
 def solve_puzzle(array):
     number_of_solutions = []
-    for i in range (len(array[0])):
+    for i in range(len(array[0])):
         number_of_solutions.append(0)
         
     for i in range(len(array[0])):
