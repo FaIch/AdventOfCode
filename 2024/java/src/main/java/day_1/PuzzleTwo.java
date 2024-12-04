@@ -1,14 +1,17 @@
+package day_1;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class PuzzleTwo {
     public static List<Integer> leftNumbers = new ArrayList<>();
     public static List<Integer> rightNumbers = new ArrayList<>();
     public static void main(String[] args) {
-        String filePath = "2024/1/input.txt";
+        String filePath = "src/main/java/day_1/input.txt";
         
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;

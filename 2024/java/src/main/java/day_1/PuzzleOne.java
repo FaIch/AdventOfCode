@@ -1,10 +1,12 @@
+package day_1;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.*;
 
 public class PuzzleOne {
     public static void main(String[] args) {
-        String filePath = "2024/1/input.txt";
+        String filePath = "src/main/java/day_1/input.txt";
 
         List<Integer> leftNumbers = new ArrayList<>();
         List<Integer> rightNumbers = new ArrayList<>();
